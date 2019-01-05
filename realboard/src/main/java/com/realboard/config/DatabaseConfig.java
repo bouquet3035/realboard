@@ -22,6 +22,7 @@ public class DatabaseConfig {
 
 		private static final Logger logger = LoggerFactory.getLogger(DatabaseConfig.class);
 
+		
 		@Autowired
 		ApplicationContext applicationContext;
 
