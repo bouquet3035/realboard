@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="com.realboard.mapper.BoardMapper">
+
+    <select id="boardSelect" resultType="com.realboard.domain.BoardVO">
+    	select bno
+    	       , title 
+    	       , content
+    	       , writer
+    	       , regdate
+    	       , viewcnt
+    	  from tbl_board
+    	  <where>
+    	  	<if test="bnoArray != null">
+    	  		bno in
+    	  		<foreach collection="bnoArray" item="a" separator="," open="(" close=")"> 
+    	  			#{a}
+    	  		</foreach>
+    	  	</if>
+    	  </where>
+    </select>
+    
+    <insert id="boardInsert" parameterType="com.realboard.domain.BoardVO">
+    	insert into tbl_board (title
+    	                       ,content
+    	                       ,writer
+    	                       ,regdate
+    	                       ,viewcnt
+    	                      )
+    	     values
+		<foreach collection="BoardVoArray" item="a" separator="," >
+        	( 
+    	  	#{a.title}
+    	  	,#{a.content}
+    	  	,#{a.writer}
+    	  	,#{a.regdate}
+    	  	,#{a.viewcnt}
+    	  	)
+    	</foreach>
+    </insert>
+    
+ 	<update id="boardUpdate" parameterType="com.realboard.domain.BoardVO">
+ 		update tbl_board 
+ 		   <set>
+ 		   	   <if test="title != null"> title = #{title},</if>
+ 		   	   <if test="content != null"> content = #{content},</if>
+ 		   	   <if test="writer != null"> writer = #{writer},</if>
+ 		   	   <if test="regdate != null"> regdate = #{regdate},</if>
+ 		   	   <if test="viewcnt != null"> viewcnt = #{viewcnt},</if>
+ 		   </set>
+ 		      
+ 		<where>
+ 			<if test="bnoArray != null">
+ 			   bno in
+				<foreach collection="bnoArray" item="a" separator="," open="(" close=")"> 
+    	  			#{a}
+    	  		</foreach>
+ 			</if>
+ 		</where>
+ 	</update>
+ 	
+ 	<delete id="boardDelete" parameterType="com.realboard.domain.BoardVO">
+ 		delete tbl_board
+ 		<where>
+ 			<if test="bnoArray != null">
+ 			   bno in
+				<foreach collection="bnoArray" item="a" separator="," open="(" close=")"> 
+    	  			#{a}
+    	  		</foreach>
+ 			</if>
+ 		</where>
+ 	</delete>
+ 	
+</mapper>

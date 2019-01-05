@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">  
+    <encoder>
+      <pattern>%gray(%d{yyyyMMdd HH:mm:ss.SSS}) %gray([%thread])  %gray(%-3level) %gray(%logger{5}) - %n %blue(%msg) %n</pattern>
+    </encoder>
+  </appender>
+  
+  <logger name="jdbc" level="off"/>
+  
+  <logger name="jdbc.sqlonly" level="INFO" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  
+  <logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger> 
+  
+  <logger name="jdbc.resultsettable" level="INFO" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+  </root> 
+</configuration>
