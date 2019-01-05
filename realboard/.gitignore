@@ -2,6 +2,7 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 /realboard/bin
+/realboard/bin/main/com/realboard
 .class
 ### STS ###
 .apt_generated
