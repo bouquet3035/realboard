@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	  	</if>
     	  </where>
     </select>
-    
+   
     <insert id="boardInsert" parameterType="com.realboard.domain.BoardVO">
     	insert into tbl_board (title
     	                       ,content
@@ -30,16 +30,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	                       ,regdate
     	                       ,viewcnt
     	                      )
-    	     values
-		<foreach collection="BoardVoArray" item="a" separator="," >
-        	( 
-    	  	#{a.title}
-    	  	,#{a.content}
-    	  	,#{a.writer}
-    	  	,#{a.regdate}
-    	  	,#{a.viewcnt}
-    	  	)
-    	</foreach>
+    	     values (#{title}
+ 		   	         , #{content}
+ 		   			 , #{writer}
+ 		   	         , #{regdate}
+ 		   	         , #{viewcnt}
+ 		   			)
+			<!-- <foreach collection="BoardVoArray" item="a" separator="," >
+	        	( 
+	    	  	#{a.title}
+	    	  	,#{a.content}
+	    	  	,#{a.writer}
+	    	  	,#{a.regdate}
+	    	  	,#{a.viewcnt}
+	    	  	)
+	    	</foreach> -->
     </insert>
     
  	<update id="boardUpdate" parameterType="com.realboard.domain.BoardVO">
