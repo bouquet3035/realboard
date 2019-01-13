@@ -52,6 +52,7 @@ public class BoardController {
 			System.err.println("boardList..error");
 		}
 	}
+	
 	@RequestMapping(value="/board/read", method = RequestMethod.GET)
 	public void read(@RequestParam("bno") int bno, Model model) {
 		System.err.println("read..get");
@@ -62,8 +63,26 @@ public class BoardController {
 			resultVO.setBnoArray(bnoArray);
 			model.addAttribute("boardVO",boardService.boardSelect(resultVO));
 		} catch (Exception e) {
-			System.err.println("read...get");
+			System.err.println("read...error");
 		}
+	}
+	
+	@RequestMapping(value="/board/remove", method = RequestMethod.POST)
+	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr) {
+		System.err.println("read..remove");
+		try {
+			BoardVO resultBoardVO = new BoardVO();
+			resultBoardVO.setBno(bno);
+			ArrayList<Integer> bnoArray = new ArrayList<Integer>();
+			bnoArray.add(bno);
+			resultBoardVO.setBnoArray(bnoArray);
+			boardService.boareDelete(resultBoardVO);
+		} catch (Exception e) {
+			System.err.println("remove...error");
+			return "remove...error";
+		}
+		rttr.addFlashAttribute("msg", "success");
+		return "redirect:/board/listAll";
 	}
 	
 	@RequestMapping(value="board/test", method = RequestMethod.GET)

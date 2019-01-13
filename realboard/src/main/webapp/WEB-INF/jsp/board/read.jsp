@@ -5,7 +5,7 @@
 
 
 <%@include file="/WEB-INF/includes/header.jsp"%>
-<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
 <script>
 alert("1");
 var result = "${boardVO}";
@@ -13,6 +13,26 @@ console.log("resutl 의 결과")
 console.log(result);
 var result1 =  "${boardVO[0]}";
 console.log(result1);
+
+$(document).ready(function(){
+	var formObj = $("form[role='form']");
+	console.log(formObj);
+	$(".btn-warning").on("click",function(){
+		formObj.attr("action","/board/modify");
+		formObj.attr("method","get");
+		formObj.submit();
+	});
+	
+	$(".btn-danger").on("click",function(){
+		formObj.attr("action","/board/remove");
+		formObj.submit();
+	});
+	
+	$(".btn-primary").on("click",function(){
+		formObj.attr("action","/board/listAll");
+		self.location = "/board/listAll";
+	});
+});
 </script>
 
 
@@ -217,29 +237,31 @@ console.log(result1);
             	<!-- text input -->
                 <div class="form-group">
                   <label>title</label>
-                  <input type="text" name="title" class="form-control" value="${boardVO[0].title}">
+                  <input type="text" name="title" class="form-control" value="${boardVO[0].title}" readonly="readonly">
                 </div>
                 
                 <!-- textarea -->
                 <div class="form-group">
                   <label>content</label>
-                  <textarea name="content" class="form-control" value="${boardVO[0].content}" rows="3" >${boardVO[0].content}</textarea>
+                  <textarea name="content" class="form-control" value="${boardVO[0].content}" rows="3" readonly="readonly">${boardVO[0].content}</textarea>
                 </div>
                 
                 <div class="form-group">
                   <label>regdate</label>
-                  <input type="text" name="regdate" class="form-control" value="${boardVO[0].regdate}">
+                  <input type="text" name="regdate" class="form-control" value="${boardVO[0].regdate}" readonly="readonly">
                 </div>
                 
                 <div class="form-group">
                   <label>Writer</label>
-                  <input type="text" name="writer" class="form-control" value="${boardVO[0].writer}">
+                  <input type="text" name="writer" class="form-control" value="${boardVO[0].writer}" readonly="readonly">
                 </div>
             </div>
             <!-- /.box-body -->
             
             <div class="box-footer">
-          		<button type="submit" class="btn btn-primary">Submit</button>
+          		<button type="submit" class="btn btn-warning">Modify</button>
+          		<button type="submit" class="btn btn-danger">REMOVE</button>
+          		<button type="submit" class="btn btn-primary">LISTALL</button>
           	</div>
           </div>
 

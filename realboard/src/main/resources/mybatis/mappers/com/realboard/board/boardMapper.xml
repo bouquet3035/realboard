@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</update>
  	
  	<delete id="boardDelete" parameterType="com.realboard.domain.BoardVO">
- 		delete tbl_board
+ 		delete from tbl_board
  		<where>
  			<if test="bnoArray != null">
  			   bno in

@@ -3,11 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
 	alert("1");
 	var result = "${list[0].bno}";
 	console.log(result);
+	var msg = "${msg}";
+	
 	
 </script>
 <%@include file="/WEB-INF/includes/header.jsp"%>
