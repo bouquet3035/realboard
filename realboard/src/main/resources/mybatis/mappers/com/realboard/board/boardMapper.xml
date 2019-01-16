@@ -79,4 +79,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		</where>
  	</delete>
  	
+ 	<select id="listPage" resultType="com.realboard.domain.BoardVO" parameterType="int">
+    	select bno
+    	       , title 
+    	       , content
+    	       , writer
+    	       , regdate
+    	       , viewcnt
+    	  from tbl_board
+    	  where bno > 0	
+    	  order by bno desc
+    	  limit #{page},10
+    </select>
+    
+    <select id="listCriteria" resultType="com.realboard.domain.BoardVO" parameterType="com.realboard.paging.Criteria">
+    	select bno
+    	       , title 
+    	       , content
+    	       , writer
+    	       , regdate
+    	       , viewcnt
+    	  from tbl_board
+    	  where bno > 0	
+    	  order by bno desc
+    	  limit #{pageStart},#{perPageNum}
+    </select>
+ 	
 </mapper>

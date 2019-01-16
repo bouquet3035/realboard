@@ -1,28 +1,36 @@
 package com.realboard;
 
+import java.security.Provider.Service;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.realboard.domain.BoardVO;
 import com.realboard.mapper.BoardMapper;
+import com.realboard.paging.Criteria;
+import com.realboard.service.BoardService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RealboardApplicationTests {
 	@Autowired
-    private SqlSessionFactory sqlSession; //ÀÛ¼º
+    private SqlSessionFactory sqlSession; //ï¿½Û¼ï¿½
 	
 	@Autowired
     private BoardMapper mapper;
 	
+	@Autowired
+	private BoardService boardService;
+	
 	@Test
-    public void testSqlSession() throws Exception{//ÀÛ¼º
+    public void testSqlSession() throws Exception{//ï¿½Û¼ï¿½
         
         System.out.println("sqlSession : "+sqlSession);
         
@@ -42,17 +50,17 @@ public class RealboardApplicationTests {
 		BoardVO resultVO = new BoardVO();
 		ArrayList<BoardVO> boardVoArray = new ArrayList<BoardVO>();
 		BoardVO boardVO = new BoardVO();
-		boardVO.setTitle("test Á¦¸ñÀÔ´Ï´Ù");
-		boardVO.setContent("test ³»¿ëÀÔ´Ï´Ù.");
-		boardVO.setWriter("testÀÛ¼ºÀÚÀÔ´Ï´Ù.");
+		boardVO.setTitle("test ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
+		boardVO.setContent("test ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
+		boardVO.setWriter("testï¿½Û¼ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 		boardVO.setRegdate("2019-01-05");
 		boardVO.setViewcnt(1);
 		
 		
 		BoardVO boardVO1 = new BoardVO();
-		boardVO1.setTitle("test Á¦¸ñÀÔ´Ï´Ù1");
-		boardVO1.setContent("test ³»¿ëÀÔ´Ï´Ù.1");
-		boardVO1.setWriter("testÀÛ¼ºÀÚÀÔ´Ï´Ù.1");
+		boardVO1.setTitle("test ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½1");
+		boardVO1.setContent("test ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.1");
+		boardVO1.setWriter("testï¿½Û¼ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.1");
 		boardVO1.setRegdate("2019-01-06");
 		boardVO1.setViewcnt(1);
 		
@@ -65,18 +73,44 @@ public class RealboardApplicationTests {
 	@Test
 	public void testUpdate() throws Exception {
 		BoardVO resultVO = new BoardVO();
-		resultVO.setTitle("°¡");
-		resultVO.setContent("³ª");
-		resultVO.setWriter("´Ù");
+		resultVO.setTitle("ï¿½ï¿½");
+		resultVO.setContent("ï¿½ï¿½");
+		resultVO.setWriter("ï¿½ï¿½");
 		
 		resultVO.setRegdate("2018-12-12");
-		ArrayList<Integer> bnoArray = new ArrayList<Integer>();
+	 	ArrayList<Integer> bnoArray = new ArrayList<Integer>();
 		bnoArray.add(1);
 		bnoArray.add(2);
 		resultVO.setBnoArray(bnoArray);
 		mapper.boardUpdate(resultVO);
 	}
 	
+	@Test
+	public void testListPage() throws Exception {
+		System.err.println("1");
+		int page = 1;
+		System.err.println("2");
+		List<BoardVO> list = boardService.listPage(page);
+		System.err.println("3");
+		System.err.println(list.toString());
+		for(BoardVO boardVO : list) {
+			System.err.println("boardVO.getBno()" + boardVO.getBno());
+			System.err.println("boardVO.getTitle()" + boardVO.getTitle());
+		}
+	}
+	
+	@Test
+	public void testListCriteria() throws Exception {
+		Criteria cri = new Criteria();
+		cri.setPerPage(2);
+		cri.setPerPage(10);
+		List<BoardVO> list = boardService.listCriteria(cri);
+		
+		for(BoardVO boardVO : list) {
+			System.err.println("boardVO.getBno()" + boardVO.getBno());
+			System.err.println("boardVO.getTitle()" + boardVO.getTitle());
+		}
+	}
 
 	@Test
 	public void contextLoads() {

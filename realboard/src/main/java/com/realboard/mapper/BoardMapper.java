@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.realboard.domain.BoardVO;
+import com.realboard.paging.Criteria;
 @Mapper
 public interface BoardMapper {
 	public List<BoardVO> boardSelect (BoardVO boardVO) throws Exception;
@@ -14,4 +15,9 @@ public interface BoardMapper {
 	public void boardUpdate(BoardVO boardVO) throws Exception;
 	
 	public void boardDelete(BoardVO boardVO) throws Exception;
+	
+	public List<BoardVO> listPage (int page) throws Exception;
+	
+	public List<BoardVO> listCriteria (Criteria cri) throws Exception;
 }
+ 

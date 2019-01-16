@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	  	</if>
     	  </where>
     </select>
-    
+   
     <insert id="boardInsert" parameterType="com.realboard.domain.BoardVO">
     	insert into tbl_board (title
     	                       ,content
@@ -30,16 +30,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	                       ,regdate
     	                       ,viewcnt
     	                      )
-    	     values
-		<foreach collection="BoardVoArray" item="a" separator="," >
-        	( 
-    	  	#{a.title}
-    	  	,#{a.content}
-    	  	,#{a.writer}
-    	  	,#{a.regdate}
-    	  	,#{a.viewcnt}
-    	  	)
-    	</foreach>
+    	     values (#{title}
+ 		   	         , #{content}
+ 		   			 , #{writer}
+ 		   	         , #{regdate}
+ 		   	         , #{viewcnt}
+ 		   			)
+			<!-- <foreach collection="BoardVoArray" item="a" separator="," >
+	        	( 
+	    	  	#{a.title}
+	    	  	,#{a.content}
+	    	  	,#{a.writer}
+	    	  	,#{a.regdate}
+	    	  	,#{a.viewcnt}
+	    	  	)
+	    	</foreach> -->
     </insert>
     
  	<update id="boardUpdate" parameterType="com.realboard.domain.BoardVO">
@@ -63,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</update>
  	
  	<delete id="boardDelete" parameterType="com.realboard.domain.BoardVO">
- 		delete tbl_board
+ 		delete from tbl_board
  		<where>
  			<if test="bnoArray != null">
  			   bno in
@@ -73,5 +78,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			</if>
  		</where>
  	</delete>
+ 	
+ 	<select id="listPage" resultType="com.realboard.domain.BoardVO" parameterType="int">
+    	select bno
+    	       , title 
+    	       , content
+    	       , writer
+    	       , regdate
+    	       , viewcnt
+    	  from tbl_board
+    	  where bno > 0	
+    	  order by bno desc
+    	  limit #{page},10
+    </select>
+    
+    <select id="listCriteria" resultType="com.realboard.domain.BoardVO" parameterType="com.realboard.paging.Criteria">
+    	select bno
+    	       , title 
+    	       , content
+    	       , writer
+    	       , regdate
+    	       , viewcnt
+    	  from tbl_board
+    	  where bno > 0	
+    	  order by bno desc
+    	  limit #{pageStart},#{perPageNum}
+    </select>
  	
 </mapper>

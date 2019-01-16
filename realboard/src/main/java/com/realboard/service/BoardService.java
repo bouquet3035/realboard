@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.realboard.domain.BoardVO;
 import com.realboard.mapper.BoardMapper;
+import com.realboard.paging.Criteria;
 
 @Service
 public class BoardService {
@@ -29,5 +30,17 @@ public class BoardService {
 	
 	public void boareDelete(BoardVO boardVO) throws Exception {
 		boardMapper.boardDelete(boardVO);
+	}
+	
+	public List<BoardVO> listPage (int page) throws Exception {
+		if(page <= 0) {
+			page = 1; 
+		}
+		page = (page -1) * 10;
+		return boardMapper.listPage(page);
+	}
+	
+	public List<BoardVO> listCriteria (Criteria cri) throws Exception {
+		return boardMapper.listCriteria(cri);
 	}
 }

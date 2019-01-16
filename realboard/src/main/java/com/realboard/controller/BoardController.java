@@ -85,6 +85,29 @@ public class BoardController {
 		return "redirect:/board/listAll";
 	}
 	
+	@RequestMapping(value="/board/modify", method = RequestMethod.GET)
+	public void modifyGET (int bno, Model model) throws Exception {
+		BoardVO boardVO = new BoardVO();
+		ArrayList<Integer> bnoArray = new ArrayList<Integer>();
+		bnoArray.add(bno);
+		boardVO.setBnoArray(bnoArray);
+		model.addAttribute("boardVO",boardService.boardSelect(boardVO));
+	}
+	
+	@RequestMapping(value="/board/modify", method = RequestMethod.POST)
+	public String modifyPOST (BoardVO boardVO, RedirectAttributes rttr) throws Exception {
+		System.err.println("modifyPOST ... post");
+		System.err.println(boardVO.toString());
+		BoardVO resultBoardVO = boardVO;
+		ArrayList<Integer> bnoArray = new ArrayList<Integer>();
+		bnoArray.add(boardVO.getBno());
+		resultBoardVO.setBnoArray(bnoArray);
+		boardService.boardUpdate(boardVO);
+		
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		return "redirect:/board/listAll";
+	}
+	
 	@RequestMapping(value="board/test", method = RequestMethod.GET)
 	public void boardTest() {
 		System.err.println("boardTest...get");

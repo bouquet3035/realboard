@@ -4,16 +4,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 
-<script type="text/javascript">
-	alert("1");
-	var result = "${list[0].bno}";
-	console.log(result);
-	var msg = "${msg}";
-	console.log("msg---->"+msg);
-	
-	
-</script>
 <%@include file="/WEB-INF/includes/header.jsp"%>
+
+<script>
+$(function() {
+	var formObj = $("form[role='form']");
+	console.log(formObj)
+	$(".btn-primary").on("click",function(){
+		console.log("여기 들어오니?");
+		formObj.submit();
+	});
+	
+	$(".btn-WARNING").on("click",function(){
+		self.location="/board/listAll";
+	});
+});
+</script>
+
 
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -202,25 +209,49 @@
 
     <!-- Main content -->
     <section class="content">
-		<table class="table table-bordered">
-      		<tr>
-				<th style="width: 10px">Bno</th>
-	            <th>Title</th>
-	            <th>Writer</th>
-	            <th>Regdate</th>
-	            <th style="width: 40px">ViewCnt</th>
-        	</tr>
-      	
-      	<c:forEach items="${list}" var="boardVO">
-      		<tr>
-				<th>${boardVO.bno}</th>
-				<th><a href="/board/read?bno=${boardVO.bno}">${boardVO.title}</th>
-				<th>${boardVO.writer}</th>
-				<th>${boardVO.regdate}</th>
-				<th>${boardVO.viewcnt}</th>
-	  		</tr>
-		</c:forEach>
-		</table>
+    	<div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">General Elements</h3>
+            </div>
+            <!-- /.box-header -->
+    		<form role="form" method="post">
+            <div class="box-body">
+            	<!-- text input -->
+            	<div class="form-group">
+                  <label>bno</label>
+                  <input type="text" name="title" class="form-control" value="${boardVO[0].bno}"readonly="readonly" >
+                </div>
+            	
+                <div class="form-group">
+                  <label>title</label>
+                  <input type="text" name="title" class="form-control" value="${boardVO[0].title}" >
+                </div>
+                
+                <!-- textarea -->
+                <div class="form-group">
+                  <label>content</label>
+                  <textarea name="content" class="form-control" value="${boardVO[0].content}" rows="3" >${boardVO[0].content}</textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label>regdate</label>
+                  <input type="text" name="regdate" class="form-control" value="${boardVO[0].regdate}" readonly="readonly">
+                </div>
+                
+                <div class="form-group">
+                  <label>Writer</label>
+                  <input type="text" name="writer" class="form-control" value="${boardVO[0].writer}" readonly="readonly">
+                </div>
+            </div>
+            </form>
+            
+            <!-- /.box-body -->
+            
+            <div class="box-footer">
+          		<button type="submit" class="btn btn-primary">SAVE</button>
+          		<button type="submit" class="btn btn-WARNING">CANCEL</button>
+          	</div>
+        </div>
 
     </section>
     <!-- /.content -->
