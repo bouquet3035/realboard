@@ -102,7 +102,7 @@ public class RealboardApplicationTests {
 	@Test
 	public void testListCriteria() throws Exception {
 		Criteria cri = new Criteria();
-		cri.setPerPage(2);
+		cri.setPage(2);
 		cri.setPerPage(10);
 		List<BoardVO> list = boardService.listCriteria(cri);
 		

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.realboard.domain.BoardVO;
+import com.realboard.paging.Criteria;
+import com.realboard.paging.PageMaker;
 import com.realboard.service.BoardService;
 
 @Controller
@@ -111,6 +113,33 @@ public class BoardController {
 	@RequestMapping(value="board/test", method = RequestMethod.GET)
 	public void boardTest() {
 		System.err.println("boardTest...get");
+	}
+	
+	@RequestMapping(value="board/listCri", method = RequestMethod.GET)
+	public void listCri (Criteria cri,Model model) {
+		System.err.println("cri.getPage() ====>" + cri.getPage());
+		System.err.println("listCri..get");
+		System.err.println(cri.toString());
+		try {
+			model.addAttribute("list", boardService.listCriteria(cri));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="board/listPage" , method = RequestMethod.GET)
+	public void listPage (Criteria cri, Model model)  {
+		System.err.println("listPage...get");
+		System.err.println(cri.toString());
+		try {
+			model.addAttribute("list", boardService.listCriteria(cri));
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(18);
+			model.addAttribute("pageMaker", pageMaker);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
